@@ -1,4 +1,14 @@
-class Instock:
+import os
+import time
+import smtplib
+from email.message import EmailMessage
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
+
+class InstockDetector:
     def __init__(self):
         self.last_timestamp = None
         # We are using nowinstock for checking availability
@@ -8,6 +18,9 @@ class Instock:
         '''
             Send instock warning email to end-user
         '''
+        HOST_EMAIL = os.environ.get('PS5TRACKER')
+        HOST_EMAIL_PWD = os.environ.get('PS5TRACKERPWD')
+        
         msg = EmailMessage()
         msg['Subject'] = f'Play Station 5 Instock at {seller}'
         msg['From'] = HOST_EMAIL
@@ -22,8 +35,9 @@ class Instock:
             smtp.login(HOST_EMAIL, HOST_EMAIL_PWD)
 
             smtp.send_message(msg)
+        return
             
-    def instock_detector(self):
+    def start_monitoring(self):
         '''
             Download Chromedriver and paste its path to chromedriver var.
         '''
