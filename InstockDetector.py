@@ -24,7 +24,7 @@ class InstockDetector:
         msg = EmailMessage()
         msg['Subject'] = f'Play Station 5 Instock at {seller}'
         msg['From'] = HOST_EMAIL
-        msg['To'] = HOST_EMAIL
+        msg['To'] = [HOST_EMAIL, "xinfengl@umich.edu", "vincentdwy@gmail.com"]
         msg.set_content(f'{seller} has PS5 in stock. RUSH!!!!!')
 
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
@@ -63,14 +63,14 @@ class InstockDetector:
                     self.last_timestamp = timestamp
                     self.send_warning(seller)
                     print("Warning Email Sent!")
-                    time.sleep(5)
+                    time.sleep(1200) # keep the web for displaying purpose for 10mins
                     driver.close()
                     break
                 
             self.last_timestamp = timestamp
             driver.close()
             
-            # Extend the check cycle
+            # Extend the check cycle to 1.5mins
             time.sleep(5)
         return
         
